@@ -1,39 +1,37 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
+import React from "react";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
+const schema = yup.object().shape({
+  user_name: yup.string().required("请输入姓名"),
+  phone: yup
+    .string()
+    .required("请输入手机号码")
+    .matches(/^1[3-9]\d{9}$/, "请输入有效的手机号码"),
+  contactInfo: yup.string().notRequired(),
+  notes: yup.string().notRequired(),
+});
+
+export const userFormSchema = schema;
 
 interface UserFormProps {
-  onSubmit: (data: UserFormData) => void;
+  onSubmit: (data: yup.InferType<typeof schema>) => void;
   isSubmitting: boolean;
 }
 
-export interface UserFormData {
-  user_name: string;
-  phone: string;
-  contactInfo?: string;
-  notes?: string;
-}
-
-const schema = yup.object().shape({
-  user_name: yup.string().required('请输入姓名'),
-  phone: yup
-    .string()
-    .required('请输入手机号码')
-    .matches(/^1[3-9]\d{9}$/, '请输入有效的手机号码'),
-  contactInfo: yup.string(),
-  notes: yup.string(),
-});
-
+// 使用 yup.InferType<typeof schema> 作为表单类型，确保类型推断与 schema 一致
 const UserForm: React.FC<UserFormProps> = ({ onSubmit, isSubmitting }) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<UserFormData>({
-    resolver: yupResolver(schema),
+  } = useForm<yup.InferType<typeof schema>>({
+    resolver: yupResolver(schema) as typeof yupResolver<
+      yup.InferType<typeof schema>
+    >,
   });
 
   return (
@@ -42,17 +40,22 @@ const UserForm: React.FC<UserFormProps> = ({ onSubmit, isSubmitting }) => {
       <div className="bg-zinc-800 rounded-lg p-6">
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
-            <label htmlFor="user_name" className="block text-sm font-medium mb-1">
+            <label
+              htmlFor="user_name"
+              className="block text-sm font-medium mb-1"
+            >
               姓名 <span className="text-red-500">*</span>
             </label>
             <input
               id="user_name"
               type="text"
-              {...register('user_name')}
+              {...register("user_name")}
               className="w-full p-2 bg-zinc-700 border border-zinc-600 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
             />
             {errors.user_name && (
-              <p className="mt-1 text-sm text-red-500">{errors.user_name.message}</p>
+              <p className="mt-1 text-sm text-red-500">
+                {errors.user_name.message}
+              </p>
             )}
           </div>
 
@@ -63,22 +66,27 @@ const UserForm: React.FC<UserFormProps> = ({ onSubmit, isSubmitting }) => {
             <input
               id="phone"
               type="tel"
-              {...register('phone')}
+              {...register("phone")}
               className="w-full p-2 bg-zinc-700 border border-zinc-600 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
             />
             {errors.phone && (
-              <p className="mt-1 text-sm text-red-500">{errors.phone.message}</p>
+              <p className="mt-1 text-sm text-red-500">
+                {errors.phone.message}
+              </p>
             )}
           </div>
 
           <div>
-            <label htmlFor="contactInfo" className="block text-sm font-medium mb-1">
+            <label
+              htmlFor="contactInfo"
+              className="block text-sm font-medium mb-1"
+            >
               其他联系方式（选填）
             </label>
             <input
               id="contactInfo"
               type="text"
-              {...register('contactInfo')}
+              {...register("contactInfo")}
               placeholder="微信、邮箱等"
               className="w-full p-2 bg-zinc-700 border border-zinc-600 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
             />
@@ -90,7 +98,7 @@ const UserForm: React.FC<UserFormProps> = ({ onSubmit, isSubmitting }) => {
             </label>
             <textarea
               id="notes"
-              {...register('notes')}
+              {...register("notes")}
               rows={3}
               className="w-full p-2 bg-zinc-700 border border-zinc-600 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
             />
@@ -101,7 +109,7 @@ const UserForm: React.FC<UserFormProps> = ({ onSubmit, isSubmitting }) => {
             disabled={isSubmitting}
             className="w-full py-3 px-4 bg-red-600 text-white font-medium rounded-md hover:bg-red-700 transition-colors focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 disabled:opacity-70 disabled:cursor-not-allowed"
           >
-            {isSubmitting ? '提交中...' : '提交预约'}
+            {isSubmitting ? "提交中..." : "提交预约"}
           </button>
         </form>
       </div>

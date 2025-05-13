@@ -3,7 +3,7 @@
 import { useState } from "react";
 import DatePicker from "./components/DatePicker";
 import TimeSlots from "./components/TimeSlots";
-import UserForm, { UserFormData } from "./components/UserForm";
+import UserForm, { userFormSchema } from "./components/UserForm";
 
 export default function Home() {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
@@ -11,7 +11,7 @@ export default function Home() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [bookingSuccess, setBookingSuccess] = useState(false);
 
-  const handleSubmit = async (data: UserFormData) => {
+  const handleSubmit = async (data: yup.InferType<typeof userFormSchema>) => {
     if (!selectedDate || !selectedTimeSlot) return;
 
     setIsSubmitting(true);
