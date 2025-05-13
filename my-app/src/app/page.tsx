@@ -61,7 +61,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-zinc-900 text-white">
       <header className="bg-zinc-800 p-4 shadow-md">
-        <div className="container mx-auto flex items-center justify-between">
+        <div className="container mx-auto text-center">
           <h1 className="text-2xl font-bold text-red-500">
             铁骑话球-球场预约系统
           </h1>

@@ -35,7 +35,7 @@ const UserForm: React.FC<UserFormProps> = ({ onSubmit, isSubmitting }) => {
 
   return (
     <div className="w-full">
-      <h2 className="text-xl font-bold mb-4">填写个人信息</h2>
+      <h2 className="text-xl font-bold mb-4">填写预约信息</h2>
       <div className="bg-zinc-800 rounded-lg p-6">
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
@@ -98,6 +98,7 @@ const UserForm: React.FC<UserFormProps> = ({ onSubmit, isSubmitting }) => {
             <textarea
               id="notes"
               {...register("notes")}
+              placeholder="请填写要预约的球场和球场类型,例如：云顶室内足球场-全场或者技师学院足球场-8人制场"
               rows={3}
               className="w-full p-2 bg-zinc-700 border border-zinc-600 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
             />
