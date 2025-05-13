@@ -1,10 +1,9 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import Image from 'next/image';
-import DatePicker from './components/DatePicker';
-import TimeSlots from './components/TimeSlots';
-import UserForm, { UserFormData } from './components/UserForm';
+import { useState } from "react";
+import DatePicker from "./components/DatePicker";
+import TimeSlots from "./components/TimeSlots";
+import UserForm, { UserFormData } from "./components/UserForm";
 
 export default function Home() {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
@@ -16,35 +15,37 @@ export default function Home() {
     if (!selectedDate || !selectedTimeSlot) return;
 
     setIsSubmitting(true);
-    
+
     try {
       // 调用API创建预约
-      const response = await fetch('/api/appointments', {
-        method: 'POST',
+      const response = await fetch("/api/appointments", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           user_name: data.user_name,
           phone: data.phone,
           contactInfo: data.contactInfo,
-          appointment_date: selectedDate.toISOString().split('T')[0],
+          appointment_date: selectedDate.toISOString().split("T")[0],
           appointment_time: selectedTimeSlot,
-          notes: data.notes
+          notes: data.notes,
         }),
       });
-      
+
       const result = await response.json();
-      
+
       if (!response.ok) {
-        throw new Error(result.error || '预约失败');
+        throw new Error(result.error || "预约失败");
       }
-      
-      console.log('预约成功:', result.data);
+
+      console.log("预约成功:", result.data);
       setBookingSuccess(true);
     } catch (error) {
-      console.error('预约失败:', error);
-      alert(`预约失败: ${error instanceof Error ? error.message : '服务器错误'}`);
+      console.error("预约失败:", error);
+      alert(
+        `预约失败: ${error instanceof Error ? error.message : "服务器错误"}`
+      );
     } finally {
       setIsSubmitting(false);
     }
