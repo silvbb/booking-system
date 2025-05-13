@@ -61,7 +61,9 @@ export default function Home() {
     <div className="min-h-screen bg-zinc-900 text-white">
       <header className="bg-zinc-800 p-4 shadow-md">
         <div className="container mx-auto flex items-center justify-between">
-          <h1 className="text-2xl font-bold text-red-500">预约系统</h1>
+          <h1 className="text-2xl font-bold text-red-500">
+            铁骑话球-球场预约系统
+          </h1>
         </div>
       </header>
 
@@ -120,7 +122,9 @@ export default function Home() {
 
       <footer className="bg-zinc-800 py-6 mt-12">
         <div className="container mx-auto px-4 text-center text-gray-400">
-          <p>© {new Date().getFullYear()} 预约系统 | 版权所有</p>
+          <p>
+            © {new Date().getFullYear()} 球场预约系统 | 版权所有 杰维智能Jwisdom
+          </p>
         </div>
       </footer>
     </div>
