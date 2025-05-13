@@ -4,6 +4,7 @@ import { useState } from "react";
 import DatePicker from "./components/DatePicker";
 import TimeSlots from "./components/TimeSlots";
 import UserForm, { userFormSchema } from "./components/UserForm";
+import * as yup from "yup";
 
 export default function Home() {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);

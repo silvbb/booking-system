@@ -4,6 +4,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import type { Resolver } from "react-hook-form";
 
 const schema = yup.object().shape({
   user_name: yup.string().required("请输入姓名"),
@@ -29,9 +30,7 @@ const UserForm: React.FC<UserFormProps> = ({ onSubmit, isSubmitting }) => {
     handleSubmit,
     formState: { errors },
   } = useForm<yup.InferType<typeof schema>>({
-    resolver: yupResolver(schema) as typeof yupResolver<
-      yup.InferType<typeof schema>
-    >,
+    resolver: yupResolver(schema) as Resolver<yup.InferType<typeof schema>>,
   });
 
   return (
